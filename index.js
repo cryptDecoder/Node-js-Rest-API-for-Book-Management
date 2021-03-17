@@ -31,7 +31,26 @@ app.use(bodyParser.json());
 
 // configure the Database here
 
+const dbConfig = require("./app/config/development.config");
+const mongoose = require("mongoose");
+const prependListener = require("./app/model/books.model");
+
+mongoose.Promise = global.Promise;
+
 // connecting to the database here
+
+mongoose
+  .connect(dbConfig.dbUrl, {
+    useNewUrlParser: true,
+  })
+  .then(() => {
+    console.log("-----*******----------************");
+    console.log("Successfully connected to the database");
+  })
+  .catch((err) => {
+    console.error("Could not able to connect the database, Exiting now...");
+    process.exit();
+  });
 
 // create sample get request
 
